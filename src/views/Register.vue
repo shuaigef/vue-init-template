@@ -38,46 +38,45 @@
 </template>
 
 <script setup lang="ts">
-import {onMounted, ref} from "vue";
-import {useIntervalFn} from '@vueuse/core'
-import {message} from "ant-design-vue";
+import { useIntervalFn } from "@vueuse/core";
+import { message } from "ant-design-vue";
+import { onMounted, ref } from "vue";
 import { useRouter } from "vue-router";
 
 // region 倒计时
-const time = ref(0)
+const time = ref(0);
 const { pause, resume, isActive } = useIntervalFn(() => {
-  /* your function */
-  time.value--
-  if (time.value <= 0) {
-    pause()
-  }
-}, 1000)
+	/* your function */
+	time.value--;
+	if (time.value <= 0) {
+		pause();
+	}
+}, 1000);
 onMounted(() => {
-  pause()
-})
+	pause();
+});
 const handleSend = async () => {
-  time.value = 60
-  resume()
-  message.success("验证码发送成功")
-}
+	time.value = 60;
+	resume();
+	message.success("验证码发送成功");
+};
 // endregion
 
 const formData = ref({
-  username: "",
-  email: "",
-  password: "",
-  checkPassword: "",
-  verificationCode: ""
-})
+	username: "",
+	email: "",
+	password: "",
+	checkPassword: "",
+	verificationCode: "",
+});
 
-const router = useRouter()
+const router = useRouter();
 const onSubmit = async () => {
-  message.success("注册成功")
-  router.push({
-    name: "login"
-  })
-}
-
+	message.success("注册成功");
+	router.push({
+		name: "login",
+	});
+};
 </script>
 
 <style scoped lang="scss">

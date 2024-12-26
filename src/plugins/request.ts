@@ -1,6 +1,6 @@
 import axios, { type AxiosRequestConfig } from "axios";
-import { LocalStorageEnum } from "../constants";
 import router from "../config/routes";
+import { LocalStorageEnum } from "../constants";
 
 const instance = axios.create({
 	baseURL: "http://localhost:8080/api/",

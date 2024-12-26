@@ -1,14 +1,14 @@
 import * as VueRouter from "vue-router";
+import type { RouteRecordRaw } from "vue-router";
+import LoginLayout from "../layouts/LoginLayout.vue";
 import Login from "../views/Login.vue";
 import Register from "../views/Register.vue";
-import LoginLayout from "../layouts/LoginLayout.vue";
-import type { RouteRecordRaw } from "vue-router";
 import dynamicRoutes from "./dynamicRoutes";
 
 const baseRoutes: RouteRecordRaw[] = [
 	{
-	    path: '/index',
-	    redirect: '/home',
+		path: "/index",
+		redirect: "/home",
 	},
 	{
 		path: "/user",

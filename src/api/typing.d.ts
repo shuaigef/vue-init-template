@@ -15,7 +15,7 @@ declare namespace API {
 		sortOrder?: string;
 	};
 
-  /** 分页数据返回格式 */
+	/** 分页数据返回格式 */
 	type Page<T> = {
 		records: T[];
 		total: number;

@@ -40,11 +40,11 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue";
-import { MenuUnfoldOutlined, MenuFoldOutlined } from "@ant-design/icons-vue";
-import Menu from "./Menu.vue";
-import { useRouter } from "vue-router";
+import { MenuFoldOutlined, MenuUnfoldOutlined } from "@ant-design/icons-vue";
 import { message } from "ant-design-vue";
+import { ref } from "vue";
+import { useRouter } from "vue-router";
+import Menu from "./Menu.vue";
 
 const collapsed = ref<boolean>(false);
 

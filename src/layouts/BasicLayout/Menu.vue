@@ -12,9 +12,9 @@
 </template>
 
 <script setup lang="ts">
+import { UserOutlined } from "@ant-design/icons-vue";
 import { ref } from "vue";
 import { useRouter } from "vue-router";
-import { UserOutlined } from "@ant-design/icons-vue";
 
 const selectedKeys = ref<string[]>(["home"]);
 const router = useRouter();

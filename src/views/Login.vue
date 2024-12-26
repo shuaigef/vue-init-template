@@ -47,10 +47,10 @@
 </template>
 
 <script setup lang="ts">
+import { LockOutlined, UserOutlined } from "@ant-design/icons-vue";
+import { message } from "ant-design-vue";
 import { ref } from "vue";
 import { useRouter } from "vue-router";
-import { message } from "ant-design-vue";
-import { UserOutlined, LockOutlined } from "@ant-design/icons-vue";
 
 const router = useRouter();
 

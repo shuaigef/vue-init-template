@@ -20,8 +20,7 @@
 </template>
 
 <script setup lang="ts">
-import {LOGO_URL} from '../constants';
-
+import { LOGO_URL } from "../constants";
 </script>
 
 <style scoped lang="scss">
