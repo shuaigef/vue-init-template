@@ -13,8 +13,8 @@
 
 <script setup lang="ts">
 import { UserOutlined } from "@ant-design/icons-vue";
-import { ref } from "vue";
-import { useRouter } from "vue-router";
+import { ref, watch } from "vue";
+import { useRouter, useRoute } from "vue-router";
 
 const selectedKeys = ref<string[]>(["home"]);
 const router = useRouter();
@@ -25,6 +25,12 @@ const toPage = ({ key }: { key: string }) => {
 	});
 };
 toPage({ key: selectedKeys.value[0] });
+
+const route = useRoute();
+// 监听路由变化来动态更新选中的菜单项
+watch(() => route.name, (newValue) => {
+  selectedKeys.value[0] = String(newValue);
+});
 </script>
 
 <style scoped lang="scss">

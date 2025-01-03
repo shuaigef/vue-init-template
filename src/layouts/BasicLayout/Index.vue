@@ -16,8 +16,8 @@
         <!-- 头像 -->
         <a-dropdown style="margin-right: 20px" :trigger="['click']" placement="bottomRight">
           <div style="display: inline-flex; align-items: center; gap: 8px; height: auto;">
-            <span>用户名</span>
-            <a-avatar :size="24" src="https://www.antdv.com/assets/logo.1ef800a8.svg" />
+            <span style="font-size: 14px;">{{ loginUser?.userInfo.nickname }}</span>
+            <a-avatar :size="32" :src="loginUser?.userInfo.nickname || 'https://www.antdv.com/assets/logo.1ef800a8.svg'" />
           </div>
           <template #overlay>
             <a-menu>
@@ -42,11 +42,18 @@
 <script setup lang="ts">
 import { MenuFoldOutlined, MenuUnfoldOutlined } from "@ant-design/icons-vue";
 import { message } from "ant-design-vue";
+import { storeToRefs } from "pinia";
 import { ref } from "vue";
 import { useRouter } from "vue-router";
+import { logout } from "../../api/system";
+import { LocalStorageEnum } from "../../constants";
+import { useSystemStore } from "../../store";
 import Menu from "./Menu.vue";
 
 const collapsed = ref<boolean>(false);
+
+const systemStore = useSystemStore();
+const { loginUser } = storeToRefs(systemStore);
 
 const router = useRouter();
 const toAccountSetting = () => {
@@ -54,11 +61,18 @@ const toAccountSetting = () => {
 		name: "accountSetting",
 	});
 };
-const toLogout = () => {
-	message.success("登出成功");
-	router.push({
-		name: "login",
-	});
+const toLogout = async () => {
+	try {
+		await logout();
+		message.success("登出成功");
+	} finally {
+		localStorage.removeItem(LocalStorageEnum.JWT);
+		localStorage.removeItem(LocalStorageEnum.LOGIN_USER);
+		loginUser.value = null;
+		router.push({
+			name: "login",
+		});
+	}
 };
 </script>
 
