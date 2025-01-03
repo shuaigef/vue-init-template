@@ -18,4 +18,17 @@ declare namespace API {
 		userInfo: API.SessionUser;
 		authorityList: API.Authority[];
 	};
+
+	type UserRegisterParams = {
+		username: string;
+		email: string;
+		password: string;
+		checkPassword: string;
+		verificationCode: string;
+	};
+
+  type VerificationCodeSendParams = {
+    target: string,
+    biz: string
+  }
 }
