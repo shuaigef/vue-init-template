@@ -4,7 +4,7 @@
       <div class="top">
         <div class="title">前端初始化模版</div>
       </div>
-      <a-form class="register-form" :rules="userRegisterFormRules" :model="userRegisterParams" layout="vertical" @finish="handleRegister">
+      <a-form class="register-form" :rules="userRegisterFormRules" :model="userRegisterParams" layout="vertical" @finish="handleRegister" @validate="handleValidate">
         <a-form-item name="username" label="用户名">
           <a-input v-model:value="userRegisterParams.username" placeholder="请输入用户名" />
         </a-form-item>
@@ -26,7 +26,7 @@
         <a-form-item name="verificationCode" label="验证码">
           <div style="display: flex">
             <a-input v-model:value="userRegisterParams.verificationCode" placeholder="请输入验证码" />
-            <a-button style="margin-left: 10px" type="primary" :loading="sendButtonLoading" :disabled="!userRegisterParams.email || isActive" @click="handleSend">{{ isActive? `请${time} 秒后重新获取` : '点击发送验证码' }}</a-button>
+            <a-button style="margin-left: 10px" type="primary" :loading="sendButtonLoading" :disabled="!emailValidateStatus || isActive" @click="handleSend">{{ isActive? `请${time} 秒后重新获取` : '点击发送验证码' }}</a-button>
           </div>
         </a-form-item>
         <a-form-item>
@@ -81,6 +81,13 @@ const handleSend = async () => {
 };
 // endregion
 
+const emailValidateStatus = ref(false);
+const handleValidate = (name: string, status: boolean, _errorMsgs: string[]) => {
+  if (name === "email") {
+    emailValidateStatus.value = status
+  }
+}
+
 const userRegisterFormRules: Record<string, Rule[]> = {
 	username: [
 		{ required: true, message: "请输入用户名", trigger: "change" },
@@ -92,7 +99,7 @@ const userRegisterFormRules: Record<string, Rule[]> = {
 	],
 	email: [
 		{ required: true, message: "请输入邮箱", trigger: "change" },
-		{ type: "email", message: "请输入有效的邮箱", trigger: "blur" },
+		{ type: "email", message: "请输入有效的邮箱", trigger: "change" },
 	],
 	password: [
 		{ required: true, message: "请输入密码", trigger: "change" },
@@ -106,7 +113,7 @@ const userRegisterFormRules: Record<string, Rule[]> = {
 		{ required: true, message: "请再次输入密码", trigger: "change" },
 		{
 			// 自定义验证规则，检查两次输入的密码是否相同
-			validator: (rule, value) => {
+			validator: (_rule: Rule, value: string) => {
 				return new Promise((resolve, reject) => {
 					if (value && value !== userRegisterParams.value.password) {
 						reject("两次输入的密码不一致");
