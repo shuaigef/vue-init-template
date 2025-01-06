@@ -4,7 +4,7 @@
       <div class="top">
         <div class="title">前端初始化模版</div>
       </div>
-      <a-form class="register-form" :rules="userRegisterFormRules" :model="userRegisterParams" layout="vertical" @finish="handleRegister" @validate="handleValidate">
+      <a-form class="register-form" :rules="userRegisterFormRules" :model="userRegisterParams" layout="vertical" hideRequiredMark @finish="handleRegister" @validate="handleValidate">
         <a-form-item name="username" label="用户名">
           <a-input v-model:value="userRegisterParams.username" placeholder="请输入用户名" />
         </a-form-item>
