@@ -1,6 +1,9 @@
 import { message } from "ant-design-vue";
 import axios, { type AxiosRequestConfig } from "axios";
+import { storeToRefs } from "pinia";
+import router from "../config/routes";
 import { LocalStorageEnum } from "../constants";
+import { useSystemStore } from "../store";
 
 const instance = axios.create({
 	baseURL: "http://localhost:8080/api/",
@@ -37,6 +40,19 @@ instance.interceptors.response.use(
 		console.log("error response info", error);
 		if (axios.isAxiosError(error)) {
 			message.error(error.response?.data?.message || "系统错误");
+
+			const status = error.response?.status;
+			if (status === 403) {
+				message.error("请重新登录");
+				// 清除保存的登录信息
+				localStorage.removeItem(LocalStorageEnum.JWT);
+				localStorage.removeItem(LocalStorageEnum.LOGIN_USER);
+				const systemStore = useSystemStore();
+				const { loginUser } = storeToRefs(systemStore);
+				loginUser.value = null;
+				// 跳转到登录
+				router.push({ name: "login" });
+			}
 		} else {
 			message.error("系统错误");
 		}
