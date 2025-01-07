@@ -10,7 +10,8 @@ declare namespace API {
 		nickname: string;
 		userAvatar?: string;
 		gender: number;
-		username: string;
+		userProfile: string;
+		username: string
 	};
 
 	type LoginUser = {

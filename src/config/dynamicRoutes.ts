@@ -1,7 +1,8 @@
 import type { RouteRecordRaw } from "vue-router";
 import BasicLayout from "../layouts/BasicLayout/Index.vue";
-import AccountSetting from "../views/AccountSetting.vue";
 import Index from "../views/Index.vue";
+import BasicSettings from "../views/accountSetting/BasicSettings.vue";
+import AccountSettings from "../views/accountSetting/Index.vue";
 
 const dynamicRoutes: RouteRecordRaw[] = [
 	{
@@ -9,12 +10,26 @@ const dynamicRoutes: RouteRecordRaw[] = [
 		name: "basicLayout",
 		component: BasicLayout,
 		children: [
-			{ path: "home", name: "home", component: Index, meta: { title: "首页" } },
 			{
-				path: "accountSetting",
+				path: "home",
+				name: "home",
+				component: Index,
+				meta: { title: "首页" },
+			},
+			{
+				path: "account/setting",
 				name: "accountSetting",
-				component: AccountSetting,
-				meta: { title: "个人中心" },
+				component: AccountSettings,
+				redirect: "/account/setting/basic",
+				meta: { title: "个人设置" },
+				children: [
+					{
+						path: "basic",
+						name: "basicSettings",
+						component: BasicSettings,
+						meta: { title: "基本设置" },
+					},
+				],
 			},
 		],
 	},
