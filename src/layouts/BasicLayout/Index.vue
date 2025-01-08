@@ -1,28 +1,29 @@
 <template>
-  <a-layout class="layout-demo">
-    <a-layout-sider v-model:collapsed="collapsed" :trigger="null" collapsible theme="light">
-      <div class="logo" />
-      <Menu />
-    </a-layout-sider>
-    <a-layout>
-      <a-layout-header style="background: #fff; padding: 0 30px 0 0; display: flex; justify-content: space-between; align-items: center;">
+  <a-layout class="layout-main">
+    <a-layout-header class="layout-header">
+      <div class="header-logo">
+        <img src="/public/logo-hand-circle.png" width="32px"/>
+        <span style="font-size: 20px; margin-left: 8px;">前端开发模版</span>
+      </div>
+      <div class="header-main">
         <menu-unfold-outlined
             v-if="collapsed"
             class="trigger"
             @click="() => (collapsed = !collapsed)"
         />
         <menu-fold-outlined v-else class="trigger" @click="() => (collapsed = !collapsed)" />
-
         <!-- 头像 -->
-        <a-dropdown style="margin-right: 20px" :trigger="['click']" placement="bottomRight">
+        <a-dropdown :trigger="['click']" placement="bottomRight">
           <div style="display: inline-flex; align-items: center; gap: 8px; height: auto;">
             <span style="font-size: 14px;">{{ loginUser?.userInfo.nickname }}</span>
             <a-avatar :size="32" :src="loginUser?.userInfo.nickname || 'https://www.antdv.com/assets/logo.1ef800a8.svg'" />
           </div>
           <template #overlay>
             <a-menu>
-              <a-menu-item key="accountSetting" @click="toAccountSetting">
-                个人中心
+              <a-menu-item key="accountSetting">
+                <router-link :to="{ name: 'accountSetting' }">
+                  个人设置
+                </router-link>
               </a-menu-item>
               <a-menu-item key="logout" @click="toLogout">
                 登出
@@ -30,9 +31,13 @@
             </a-menu>
           </template>
         </a-dropdown>
-
-      </a-layout-header>
-      <a-layout-content :style="{ margin: '24px 16px', background: '#fff', minHeight: '280px' }">
+      </div>
+    </a-layout-header>
+    <a-layout class="layout-bottom">
+      <a-layout-sider class="layout-sider" v-model:collapsed="collapsed" :trigger="null" collapsible theme="light">
+        <Menu />
+      </a-layout-sider>
+      <a-layout-content class="layout-content">
         <router-view/>
       </a-layout-content>
     </a-layout>
@@ -56,11 +61,7 @@ const systemStore = useSystemStore();
 const { loginUser } = storeToRefs(systemStore);
 
 const router = useRouter();
-const toAccountSetting = () => {
-	router.push({
-		name: "accountSetting",
-	});
-};
+
 const toLogout = async () => {
 	try {
 		await logout();
@@ -77,24 +78,52 @@ const toLogout = async () => {
 </script>
 
 <style scoped lang="scss">
-.layout-demo {
+.layout-main {
   height: 100vh;
-  background: var(--color-fill-2);
-  border: 1px solid var(--color-border);
-  .trigger {
-    font-size: 18px;
-    line-height: 64px;
-    padding: 0 24px;
-    cursor: pointer;
-    transition: color 0.3s;
+  width: 100vw;
+  .layout-header {
+    padding: 0;
+    background: #fff; 
+    display: flex;
+    border-bottom: 1px solid rgba(5, 5, 5, 0.06);
+    .header-logo {
+      min-width: 200px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      .header-logo-content {
+        width: 100%;
+        height: 32px;
+        background: rgba(100, 100, 100, 0.3);
+      }
+    }
+    .header-main {
+      width: 100%;
+      display: flex; 
+      justify-content: space-between; 
+      align-items: center;
+      padding: 0 20px 0 24px;
+      .trigger {
+        font-size: 18px;
+        line-height: 64px;
+        cursor: pointer;
+        transition: color 0.3s;
+      }
+      .trigger:hover {
+        color: #1890ff;
+      }
+    }
   }
-  .trigger:hover {
-    color: #1890ff;
-  }
-  .logo {
-    height: 32px;
-    background: rgba(100, 100, 100, 0.3);
-    margin: 16px;
+  .layout-bottom {
+    .layout-sider {
+      height: 100%;
+      border-right: 1px solid rgba(5, 5, 5, 0.06);
+      background: #fff; 
+    }
+    .layout-content {
+      padding: 24px 16px;
+      overflow: auto;
+    }
   }
 }
 </style>

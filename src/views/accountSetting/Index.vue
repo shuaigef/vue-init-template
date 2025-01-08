@@ -8,8 +8,8 @@
             :style="{ border: '0'}"
             v-model:selectedKeys="selectedKeys"
           >
-            <a-menu-item key="basicSettings">
-              <router-link :to="{ name: 'basicSettings' }">
+            <a-menu-item key="basicSetting">
+              <router-link :to="{ name: 'basicSetting' }">
                 基本设置
               </router-link>
             </a-menu-item>
@@ -30,7 +30,7 @@
 import { ref, watch } from "vue";
 import { useRoute } from "vue-router";
 
-const selectedKeys = ref(["basicSettings"]);
+const selectedKeys = ref(["basicSetting"]);
 
 const route = useRoute();
 // 监听路由变化来动态更新选中的菜单项

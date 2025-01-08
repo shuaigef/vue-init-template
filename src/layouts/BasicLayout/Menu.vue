@@ -1,14 +1,30 @@
 <template>
-  <a-menu v-model:selectedKeys="selectedKeys" theme="light" mode="inline" @click="toPage">
-    <a-menu-item key="home">
-      <user-outlined />
-      <span>首页</span>
-    </a-menu-item>
-    <a-menu-item key="accountSetting">
-      <user-outlined />
-      <span>个人设置</span>
-    </a-menu-item>
-  </a-menu>
+	<a-config-provider
+			:theme="{
+				'components': {
+					'Menu': {
+						'colorActiveBarBorderSize': 0
+					}
+				}
+			}" 
+	>
+		<a-menu 
+				class="menu-main" 
+				theme="light" 
+				v-model:selectedKeys="selectedKeys" 
+				mode="inline" 
+				@click="toPage"
+		>
+			<a-menu-item key="home">
+				<user-outlined />
+				<span>首页</span>
+			</a-menu-item>
+			<a-menu-item key="accountSetting">
+				<user-outlined />
+				<span>个人设置</span>
+			</a-menu-item>
+		</a-menu>
+	</a-config-provider>
 </template>
 
 <script setup lang="ts">
@@ -44,5 +60,7 @@ watch(
 </script>
 
 <style scoped lang="scss">
-
+.menu-main {
+	background: transparent;  
+}
 </style>
