@@ -11,8 +11,6 @@ declare namespace API {
 	type PageRequest = {
 		current: number;
 		pageSize: number;
-		sortField?: string;
-		sortOrder?: string;
 	};
 
 	/** 分页数据返回格式 */

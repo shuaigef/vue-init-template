@@ -23,6 +23,13 @@
 				<user-outlined />
 				<span>个人设置</span>
 			</a-menu-item>
+			<a-sub-menu key="systemManage">
+				<template #title>
+					<user-outlined />
+					<span>系统管理</span>
+				</template>
+				<a-menu-item key="userManage">用户管理</a-menu-item>
+			</a-sub-menu>
 		</a-menu>
 	</a-config-provider>
 </template>
@@ -39,21 +46,20 @@ const toPage = ({ key }: { key: string }) => {
 		name: key,
 	});
 };
-toPage({ key: selectedKeys.value[0] });
+// toPage({ key: selectedKeys.value[0] });
 
 const route = useRoute();
 // 监听路由变化来动态更新选中的菜单项
 watch(
 	() => route.matched,
 	(matchedRoutes) => {
-		console.log("11111", matchedRoutes);
-
-		if (matchedRoutes.length > 2) {
-			selectedKeys.value[0] = matchedRoutes[matchedRoutes.length - 2]
-				.name as string;
-		} else if (matchedRoutes.length === 2) {
-			selectedKeys.value[0] = matchedRoutes[1].name as string;
+		const temp: string[] = [];
+		for (const item of matchedRoutes) {
+			if (item.name) {
+				temp.push(item.name as string);
+			}
 		}
+		selectedKeys.value = temp;
 	},
 	{ immediate: true },
 );
