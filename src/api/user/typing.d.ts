@@ -36,4 +36,16 @@ declare namespace API {
 		email?: string;
 		phoneNumber?: string;
 	};
+
+	type UserUpdateParams = {
+		id: string;
+		username: string;
+		nickname: string;
+		userAvatar?: string;
+		userProfile?: string;
+		gender: number;
+		email?: string;
+		phoneNumber?: string;
+		roleId: string;
+	}
 }

@@ -1,7 +1,7 @@
 <template>
   <a-modal 
     v-model:open="props.visible" 
-    title="新增用户" 
+    title="修改用户" 
     cancelText="取消" 
     okText="确认" 
     :confirmLoading="confirmLoading"
@@ -15,12 +15,9 @@
       <a-form-item name="nickname" label="昵称">
         <a-input v-model:value="formData.nickname" placeholder="请输入昵称" />
       </a-form-item>
-      <a-form-item name="password" label="密码">
-        <a-input-password
-            v-model:value="formData.password"
-            placeholder="请输入密码"
-        />
-      </a-form-item>
+			<a-form-item name="userProfile" label="个人简介">
+				<a-textarea v-model:value="formData.userProfile" :maxlength="50" showCount rows="4" placeholder="请输入个人简介"/>
+			</a-form-item>
       <a-form-item name="gender" label="性别">
         <a-select v-model:value="formData.gender" placeholder="请选择性别">
           <a-select-option :value="0">未知</a-select-option>
@@ -46,21 +43,23 @@
 <script setup lang="ts">
 import { message } from "ant-design-vue";
 import type { Rule } from "ant-design-vue/es/form";
-import { ref } from "vue";
+import { ref, watch } from "vue";
 import { listRole } from "../../../api/role";
-import { addUser } from "../../../api/user";
+import { updateUser } from "../../../api/user";
 
 const props = defineProps<{
 	visible: boolean;
+	updateFormData: API.UserUpdateParams;
 }>();
 
 const emit = defineEmits(["ok", "update:visible"]);
 
 const formRef = ref();
 /** 表单数据 */
-const formData = ref<API.UserAddParams>({
+const formData = ref<API.UserUpdateParams>({
+	id: "",
 	username: "",
-	password: "",
+	userProfile: "",
 	nickname: "",
 	userAvatar: "",
 	gender: 0,
@@ -68,6 +67,14 @@ const formData = ref<API.UserAddParams>({
 	email: "",
 	phoneNumber: "",
 });
+watch(
+	() => props.updateFormData,
+	(newValue) => {
+		formData.value = {
+			...newValue,
+		};
+	},
+);
 /** 表单校验规则 */
 const formRules: Record<string, Rule[]> = {
 	username: [
@@ -103,7 +110,7 @@ const handleOk = async () => {
 	confirmLoading.value = true;
 	try {
 		await formRef.value.validate();
-		const res = await addUser(formData.value);
+		const res = await updateUser(formData.value);
 		if (res.code === 0) {
 			handleCancel();
 			message.success(res.message);
@@ -119,8 +126,9 @@ const handleOk = async () => {
 const handleCancel = () => {
 	emit("update:visible", false);
 	formData.value = {
+		id: "",
 		username: "",
-		password: "",
+		userProfile: "",
 		nickname: "",
 		userAvatar: "",
 		gender: 0,
@@ -139,7 +147,7 @@ const roleList = ref<API.Role[]>([]);
 	} else {
 		message.error(res.message);
 	}
-})()
+})();
 </script>
 
 <style scoped lang="scss">

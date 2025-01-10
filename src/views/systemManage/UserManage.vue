@@ -44,6 +44,7 @@
         </template>
       </template>
     </a-table>
+		<UpdateUserModal v-model:visible="updateModalVisible" :updateFormData="updateUser" @ok="handleUpdateUserOk"/>
   </div>
 </template>
 
@@ -53,6 +54,7 @@ import type { TableRowSelection } from "ant-design-vue/es/table/interface";
 import { ref, watch } from "vue";
 import { deleteBatchUser, deleteUser, listUserByPage } from "../../api/user";
 import AddUserModal from "./components/AddUserModal.vue";
+import UpdateUserModal from "./components/UpdateUserModal.vue";
 
 const columns = [
 	{
@@ -184,8 +186,26 @@ const onDelete = async (record: API.User) => {
 	}
 };
 /** 修改按钮事件 */
+const updateUser = ref<API.UserUpdateParams>({
+	id: "",
+	username: "",
+	userProfile: "",
+	nickname: "",
+	userAvatar: "",
+	gender: 0,
+	roleId: "",
+	email: "",
+	phoneNumber: "",
+});
 const onUpdate = (record: API.User) => {
-	console.log("修改用户", record);
+	updateUser.value = {
+		...record,
+	};
+	updateModalVisible.value = true;
+};
+const updateModalVisible = ref(false);
+const handleUpdateUserOk = () => {
+	onClear();
 };
 
 /** 获取表格数据 */
@@ -197,6 +217,7 @@ watch(
 	},
 	{ immediate: true },
 );
+/** 获取表格数据 */
 const getTableData = async () => {
 	selectedKeys.value = [];
 	tableDataLoading.value = true;

@@ -45,3 +45,11 @@ export async function addUser(data: API.UserAddParams) {
 			data: data
 	})
 }
+
+export async function updateUser(data: API.UserUpdateParams) {
+	return http.request<boolean>({
+			url: "/manage/user",
+			method: "PUT",
+			data: data
+	})
+}
