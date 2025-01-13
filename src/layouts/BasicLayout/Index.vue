@@ -16,7 +16,7 @@
         <a-dropdown :trigger="['click']" placement="bottomRight">
           <div style="display: inline-flex; align-items: center; gap: 8px; height: auto;">
             <span style="font-size: 14px;">{{ loginUser?.userInfo.nickname }}</span>
-            <a-avatar :size="32" :src="loginUser?.userInfo.nickname || 'https://www.antdv.com/assets/logo.1ef800a8.svg'" />
+            <a-avatar :size="32" :src="loginUser?.userInfo.userAvatar" />
           </div>
           <template #overlay>
             <a-menu>

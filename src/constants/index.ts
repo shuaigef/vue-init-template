@@ -21,8 +21,6 @@ export const COS_HOST = "https://github.com/shuaigef";
 export enum FileUploadBizEnum {
 	/** 用户头像 */
 	USER_AVATAR = "user_avatar",
-	/** 接口头像 */
-	INTERFACE_AVATAR = "interface_avatar",
 }
 
 /** 验证码发送业务类型枚举 */

@@ -9,7 +9,10 @@
     @cancel="handleCancel"
   >
     <a-form ref="formRef" :rules="formRules" :model="formData" layout="vertical" hideRequiredMark>
-      <a-form-item name="username" label="用户名">
+      <a-form-item name="userAvatar" label="头像">
+        <SingleImageUpload :biz="FileUploadBizEnum.USER_AVATAR" v-model:fileUrl="formData.userAvatar"/>
+      </a-form-item>
+			<a-form-item name="username" label="用户名">
         <a-input v-model:value="formData.username" placeholder="请输入用户名" />
       </a-form-item>
       <a-form-item name="nickname" label="昵称">
@@ -46,6 +49,8 @@ import type { Rule } from "ant-design-vue/es/form";
 import { ref, watch } from "vue";
 import { listRole } from "../../../api/role";
 import { updateUser } from "../../../api/user";
+import SingleImageUpload from "../../../components/SingleImageUpload.vue";
+import { FileUploadBizEnum } from "../../../constants";
 
 const props = defineProps<{
 	visible: boolean;

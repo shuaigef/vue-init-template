@@ -3,7 +3,10 @@
     <a-row :gutter="16">
       <a-col :span="8">
         <a-form :model="userBasicInfoUpdateParams" :rules="userUpdateFormRules" hideRequiredMark layout="vertical" @finish="handleUpdate">
-          <a-form-item name="username" label="用户名">
+          <a-form-item name="userAvatar" label="头像">
+						<SingleImageUpload :biz="FileUploadBizEnum.USER_AVATAR" v-model:fileUrl="userBasicInfoUpdateParams.userAvatar"/>
+					</a-form-item>
+					<a-form-item name="username" label="用户名">
             <a-input v-model:value="userBasicInfoUpdateParams.username" placeholder="请输入用户名" />
           </a-form-item>
           <a-form-item name="nickname" label="昵称">
@@ -24,9 +27,6 @@
           </a-form-item>
         </a-form>
       </a-col>
-      <a-col :span="16" :style="{ minHeight: '180px' }">
-        更新头像
-      </a-col>
     </a-row>
   </div>
 </template>
@@ -37,7 +37,8 @@ import type { Rule } from "ant-design-vue/es/form";
 import { storeToRefs } from "pinia";
 import { ref } from "vue";
 import { updateUserBasicInfo } from "../../api/user";
-import { LocalStorageEnum } from "../../constants";
+import SingleImageUpload from "../../components/SingleImageUpload.vue";
+import { FileUploadBizEnum, LocalStorageEnum } from "../../constants";
 import { useSystemStore } from "../../store";
 
 const systemStore = useSystemStore();

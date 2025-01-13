@@ -5,11 +5,11 @@
     list-type="picture-card"
     :beforeUpload="beforeUpload"
     :customRequest="customRequest"
-    :maxCount="props.maxCount"
+    :maxCount="maxCount"
     :progress="progress"
     @preview="handlePreview"
   >
-    <div v-if="fileList.length < props.maxCount">
+    <div v-if="fileList.length < maxCount">
       <plus-outlined />
       <div style="margin-top: 8px">上传</div>
     </div>
@@ -28,11 +28,12 @@ import { uploadFile } from "../api/file";
 
 const props = defineProps<{
 	biz: string;
-	fileUrl: string;
-	maxCount: number;
+	fileUrl: string | undefined;
 }>();
 
 const emit = defineEmits(["update:fileUrl"]);
+
+const maxCount = ref(1)
 
 const fileList = ref<UploadFile[]>([]);
 watch(
@@ -97,7 +98,7 @@ const previewImage = ref("");
 /** 预览 */
 const handlePreview = (file: UploadFile) => {
 	previewVisible.value = true;
-	previewImage.value = file.thumbUrl as string;
+	previewImage.value = file.url as string;
 };
 const handleCancel = () => {
 	previewVisible.value = false;
