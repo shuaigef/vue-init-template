@@ -25,6 +25,7 @@ import { type ProgressProps, type UploadFile, message } from "ant-design-vue";
 import type { UploadRequestOption } from "ant-design-vue/es/vc-upload/interface";
 import { ref, watch } from "vue";
 import { uploadFile } from "../api/file";
+import { FileUploadBizEnum } from "../constants";
 
 const props = defineProps<{
 	biz: string;
@@ -33,7 +34,7 @@ const props = defineProps<{
 
 const emit = defineEmits(["update:fileUrl"]);
 
-const maxCount = ref(1)
+const maxCount = ref(1);
 
 const fileList = ref<UploadFile[]>([]);
 watch(
@@ -62,8 +63,25 @@ const progress = ref<ProgressProps>({
 
 /** 上传前钩子 */
 const beforeUpload = (file: UploadFile): boolean => {
-	// todo 上传前校验，返回false停止上传
-	console.log("before upload", file);
+	if (FileUploadBizEnum.USER_AVATAR === props.biz) {
+		// 文件大小不能超过 1MB
+		if (!file.size || file.size > 1024 * 1024) {
+			message.error("文件大小不能超过 1MB");
+			return false;
+		}
+		// 文件类型错误
+		const fileSuffix = file.name.substring(file.name.lastIndexOf(".") + 1);
+		const imageTypeList = ["jpeg", "jpg", "svg", "png", "webg"];
+		if (!imageTypeList.includes(fileSuffix)) {
+			message.error("文件类型错误");
+			return false;
+		}
+	} else {
+		// biz错误
+		message.error("系统错误");
+		console.log(`文件上传错误，biz 不存在：${props.biz}`);
+		return false;
+	}
 	return true;
 };
 /** 自定义上传 */
