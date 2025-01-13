@@ -29,6 +29,7 @@
 					<span>系统管理</span>
 				</template>
 				<a-menu-item key="userManage">用户管理</a-menu-item>
+				<a-menu-item key="authorityManage">权限管理</a-menu-item>
 			</a-sub-menu>
 		</a-menu>
 	</a-config-provider>
