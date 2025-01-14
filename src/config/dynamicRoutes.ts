@@ -5,6 +5,7 @@ import BasicSetting from "../views/accountSetting/BasicSetting.vue";
 import AccountSetting from "../views/accountSetting/Index.vue";
 import UserManage from "../views/systemManage/UserManage.vue";
 import AuthorityManage from "../views/systemManage/AuthorityManage.vue";
+import RoleManage from "../views/systemManage/RoleManage.vue";
 
 const dynamicRoutes: RouteRecordRaw[] = [
 	{
@@ -56,6 +57,12 @@ const dynamicRoutes: RouteRecordRaw[] = [
 						name: "authorityManage",
 						component: AuthorityManage,
 						meta: { title: "权限管理" },
+					},
+					{
+						path: "role",
+						name: "roleManage",
+						component: RoleManage,
+						meta: { title: "角色管理" },
 					},
 				],
 			},

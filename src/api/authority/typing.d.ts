@@ -31,7 +31,7 @@ declare namespace API {
 		code?: string;
 		name?: string;
 		authorityType?: string;
-	} & PageRequest;
+	} & API.PageRequest;
 
 	type AuthorityAddParams = {
 		code: string;

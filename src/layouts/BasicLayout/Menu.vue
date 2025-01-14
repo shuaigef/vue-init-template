@@ -30,6 +30,7 @@
 				</template>
 				<a-menu-item key="userManage">用户管理</a-menu-item>
 				<a-menu-item key="authorityManage">权限管理</a-menu-item>
+				<a-menu-item key="roleManage">角色管理</a-menu-item>
 			</a-sub-menu>
 		</a-menu>
 	</a-config-provider>
