@@ -21,8 +21,9 @@
       <a-space size="middle">
         <a-button type="primary" @click="addModalVisible = true">新增</a-button>
         <a-button v-if="selectedKeys.length > 0" type="primary" danger @click="onDeleteBatch">删除</a-button>
-        <AddRoleModal v-model:visible="addModalVisible" @ok="handleAddRoleOk"/>
+        <a-button type="primary" v-show="loginUser?.userInfo.roleId === '1'" :loading="resetAdminLoading" @click="handleResetAdmin">重置超级管理员权限</a-button>
       </a-space>
+			<AddRoleModal v-model:visible="addModalVisible" @ok="handleAddRoleOk"/>
     </div>
     <a-table :columns="columns" :dataSource="tableData" size="middle" :loading="tableDataLoading"
              rowKey="id" :rowSelection="rowSelection"
@@ -35,20 +36,30 @@
         <template v-else-if="column.dataIndex === 'operation'">
           <a-button type="link" @click="onUpdate(record)">修改</a-button>
           <a-divider type="vertical"/>
+					<a-button type="link" @click="onUpdateAuthority(record)">权限</a-button>
+          <a-divider type="vertical"/>
           <a-button type="link" danger @click="onDelete(record)">删除</a-button>
         </template>
       </template>
     </a-table>
 		<UpdateRoleModal v-model:visible="updateModalVisible" :updateFormData="updateRole" @ok="handleUpdateUserOk"/>
   </div>
+	<UpdateAuthDrawer v-model:visible="updateAuthVisible" :authRoleId="authRoleId" :authTreeData="authTreeData"/>
 </template>
 
 <script setup lang="ts">
 import { message } from "ant-design-vue";
 import type { TableRowSelection } from "ant-design-vue/es/table/interface";
+import { storeToRefs } from "pinia";
 import { ref, watch } from "vue";
+import {
+	getAuthorityTreeByRoleId,
+	resetAdminAuthority,
+} from "../../api/authority";
 import { deleteBatchRole, deleteRole, queryRoleByPage } from "../../api/role";
+import { useSystemStore } from "../../store";
 import AddRoleModal from "./components/AddRoleModal.vue";
+import UpdateAuthDrawer from "./components/UpdateAuthDrawer.vue";
 import UpdateRoleModal from "./components/UpdateRoleModal.vue";
 
 const columns = [
@@ -196,6 +207,47 @@ const getTableData = async () => {
 	}
 };
 getTableData();
+
+// region 重置超级管理员权限
+const systemStore = useSystemStore();
+const { loginUser } = storeToRefs(systemStore);
+const resetAdminLoading = ref(false);
+/** 重置超级管理员权限 */
+const handleResetAdmin = async () => {
+	resetAdminLoading.value = true;
+	try {
+		const res = await resetAdminAuthority();
+		if (res.code === 0) {
+			message.success(res.message);
+		} else {
+			message.error(res.message);
+		}
+	} finally {
+		resetAdminLoading.value = false;
+	}
+};
+// endregion
+
+// region 修改角色权限
+const updateAuthVisible = ref(false);
+const authTreeData = ref<API.Authority[]>([]);
+const authRoleId = ref<string>("");
+const onUpdateAuthority = async (record: API.Role) => {
+	authRoleId.value = record.id;
+	tableDataLoading.value = true;
+	try {
+		const res = await getAuthorityTreeByRoleId(record.id);
+		if (res.code === 0) {
+			authTreeData.value = res.data;
+			updateAuthVisible.value = true;
+		} else {
+			message.error(res.message);
+		}
+	} finally {
+		tableDataLoading.value = false;
+	}
+};
+// endregion
 </script>
 
 <style scoped lang="scss">
