@@ -23,7 +23,7 @@
         <a-button v-if="selectedKeys.length > 0" type="primary" danger @click="onDeleteBatch">删除</a-button>
         <a-button type="primary" v-show="loginUser?.userInfo.roleId === '1'" :loading="resetAdminLoading" @click="handleResetAdmin">重置超级管理员权限</a-button>
       </a-space>
-			<AddRoleModal v-model:visible="addModalVisible" @ok="handleAddRoleOk"/>
+      <AddRoleModal v-model:visible="addModalVisible" @ok="handleAddRoleOk"/>
     </div>
     <a-table :columns="columns" :dataSource="tableData" size="middle" :loading="tableDataLoading"
              rowKey="id" :rowSelection="rowSelection"
@@ -36,15 +36,15 @@
         <template v-else-if="column.dataIndex === 'operation'">
           <a-button type="link" @click="onUpdate(record)">修改</a-button>
           <a-divider type="vertical"/>
-					<a-button type="link" @click="onUpdateAuthority(record)">权限</a-button>
+          <a-button type="link" @click="onUpdateAuthority(record)">权限</a-button>
           <a-divider type="vertical"/>
           <a-button type="link" danger @click="onDelete(record)">删除</a-button>
         </template>
       </template>
     </a-table>
-		<UpdateRoleModal v-model:visible="updateModalVisible" :updateFormData="updateRole" @ok="handleUpdateUserOk"/>
+    <UpdateRoleModal v-model:visible="updateModalVisible" :updateFormData="updateRole" @ok="handleUpdateUserOk"/>
   </div>
-	<UpdateAuthDrawer v-model:visible="updateAuthVisible" :authRoleId="authRoleId" :authTreeData="authTreeData"/>
+  <UpdateAuthDrawer v-model:visible="updateAuthVisible" :authRoleId="authRoleId" :authTreeData="authTreeData"/>
 </template>
 
 <script setup lang="ts">
@@ -52,10 +52,7 @@ import { message } from "ant-design-vue";
 import type { TableRowSelection } from "ant-design-vue/es/table/interface";
 import { storeToRefs } from "pinia";
 import { ref, watch } from "vue";
-import {
-	getAuthorityTreeByRoleId,
-	resetAdminAuthority,
-} from "../../api/authority";
+import { getAuthorityTreeByRoleId, resetAdminAuthority } from "../../api/authority";
 import { deleteBatchRole, deleteRole, queryRoleByPage } from "../../api/role";
 import { useSystemStore } from "../../store";
 import AddRoleModal from "./components/AddRoleModal.vue";
@@ -63,26 +60,26 @@ import UpdateAuthDrawer from "./components/UpdateAuthDrawer.vue";
 import UpdateRoleModal from "./components/UpdateRoleModal.vue";
 
 const columns = [
-	{
-		title: "角色名",
-		dataIndex: "roleName",
-		align: "center",
-	},
-	{
-		title: "角色描述",
-		dataIndex: "roleDesc",
-		align: "center",
-	},
-	{
-		title: "创建时间",
-		dataIndex: "createTime",
-		align: "center",
-	},
-	{
-		title: "操作",
-		dataIndex: "operation",
-		align: "center",
-	},
+  {
+    title: "角色名",
+    dataIndex: "roleName",
+    align: "center",
+  },
+  {
+    title: "角色描述",
+    dataIndex: "roleDesc",
+    align: "center",
+  },
+  {
+    title: "创建时间",
+    dataIndex: "createTime",
+    align: "center",
+  },
+  {
+    title: "操作",
+    dataIndex: "operation",
+    align: "center",
+  },
 ];
 /** 表格数据加载 */
 const tableDataLoading = ref(false);
@@ -92,119 +89,119 @@ const tableData = ref<API.Role[]>([]);
 const selectedKeys = ref<string[]>([]);
 /** 表格行选择配置 */
 const rowSelection = ref<TableRowSelection<API.Role>>({
-	type: "checkbox",
-	selectedRowKeys: selectedKeys.value,
-	onChange: (selectedRowKeys) => {
-		selectedKeys.value = selectedRowKeys as string[];
-	},
+  type: "checkbox",
+  selectedRowKeys: selectedKeys.value,
+  onChange: (selectedRowKeys) => {
+    selectedKeys.value = selectedRowKeys as string[];
+  },
 });
 watch(
-	() => selectedKeys.value,
-	(newSelectedKeys) => {
-		rowSelection.value.selectedRowKeys = newSelectedKeys;
-	},
+  () => selectedKeys.value,
+  (newSelectedKeys) => {
+    rowSelection.value.selectedRowKeys = newSelectedKeys;
+  },
 );
 /** 默认分页配置 */
 const defaultPagination = {
-	current: 1,
-	pageSize: 10,
+  current: 1,
+  pageSize: 10,
 };
 /** 分页信息 */
 const pagination = ref({
-	showTotal: (total: number) => `共 ${total} 条记录`,
-	total: tableData.value.length,
-	current: defaultPagination.current,
-	pageSize: defaultPagination.pageSize,
-	onChange: (page: number, pageSize: number) => {
-		pagination.value.current = page;
-		pagination.value.pageSize = pageSize;
-		getTableData();
-	},
+  showTotal: (total: number) => `共 ${total} 条记录`,
+  total: tableData.value.length,
+  current: defaultPagination.current,
+  pageSize: defaultPagination.pageSize,
+  onChange: (page: number, pageSize: number) => {
+    pagination.value.current = page;
+    pagination.value.pageSize = pageSize;
+    getTableData();
+  },
 });
 /** 用户列表查询参数 */
 const tableDataQueryParams = ref<API.RoleQueryParams>({
-	roleName: "",
-	current: pagination.value.current,
-	pageSize: pagination.value.pageSize,
+  roleName: "",
+  current: pagination.value.current,
+  pageSize: pagination.value.pageSize,
 });
 /** 搜索 */
 const onSearch = () => {
-	pagination.value.current = defaultPagination.current;
-	pagination.value.pageSize = defaultPagination.pageSize;
-	getTableData();
+  pagination.value.current = defaultPagination.current;
+  pagination.value.pageSize = defaultPagination.pageSize;
+  getTableData();
 };
 /** 清空搜索条件 */
 const onClear = () => {
-	tableDataQueryParams.value.roleName = "";
-	pagination.value.current = defaultPagination.current;
-	pagination.value.pageSize = defaultPagination.pageSize;
-	getTableData();
+  tableDataQueryParams.value.roleName = "";
+  pagination.value.current = defaultPagination.current;
+  pagination.value.pageSize = defaultPagination.pageSize;
+  getTableData();
 };
 
 /** 新增用户完成事件 */
 const addModalVisible = ref(false);
 const handleAddRoleOk = () => {
-	onClear();
+  onClear();
 };
 /** 批量删除 */
 const onDeleteBatch = async () => {
-	const res = await deleteBatchRole(selectedKeys.value);
-	if (res.code === 0) {
-		onClear();
-	} else {
-		message.error(res.message);
-	}
+  const res = await deleteBatchRole(selectedKeys.value);
+  if (res.code === 0) {
+    onClear();
+  } else {
+    message.error(res.message);
+  }
 };
 /** 删除 */
 const onDelete = async (record: API.User) => {
-	const res = await deleteRole(record.id);
-	if (res.code === 0) {
-		onClear();
-	} else {
-		message.error(res.message);
-	}
+  const res = await deleteRole(record.id);
+  if (res.code === 0) {
+    onClear();
+  } else {
+    message.error(res.message);
+  }
 };
 /** 修改按钮事件 */
 const updateRole = ref<API.RoleUpdateParams>({
-	id: "",
-	roleName: "",
-	roleDesc: "",
+  id: "",
+  roleName: "",
+  roleDesc: "",
 });
 const onUpdate = (record: API.Role) => {
-	updateRole.value = {
-		...record,
-	};
-	updateModalVisible.value = true;
+  updateRole.value = {
+    ...record,
+  };
+  updateModalVisible.value = true;
 };
 const updateModalVisible = ref(false);
 const handleUpdateUserOk = () => {
-	onClear();
+  onClear();
 };
 
 /** 获取表格数据 */
 watch(
-	() => pagination.value,
-	(newPagination) => {
-		tableDataQueryParams.value.current = newPagination.current;
-		tableDataQueryParams.value.pageSize = newPagination.pageSize;
-	},
-	{ immediate: true },
+  () => pagination.value,
+  (newPagination) => {
+    tableDataQueryParams.value.current = newPagination.current;
+    tableDataQueryParams.value.pageSize = newPagination.pageSize;
+  },
+  { immediate: true },
 );
 /** 获取表格数据 */
 const getTableData = async () => {
-	selectedKeys.value = [];
-	tableDataLoading.value = true;
-	try {
-		const res = await queryRoleByPage(tableDataQueryParams.value);
-		if (res.code === 0) {
-			tableData.value = res.data.records;
-			pagination.value.total = res.data.total;
-		} else {
-			message.error(res.message);
-		}
-	} finally {
-		tableDataLoading.value = false;
-	}
+  selectedKeys.value = [];
+  tableDataLoading.value = true;
+  try {
+    const res = await queryRoleByPage(tableDataQueryParams.value);
+    if (res.code === 0) {
+      tableData.value = res.data.records;
+      pagination.value.total = res.data.total;
+    } else {
+      message.error(res.message);
+    }
+  } finally {
+    tableDataLoading.value = false;
+  }
 };
 getTableData();
 
@@ -214,17 +211,17 @@ const { loginUser } = storeToRefs(systemStore);
 const resetAdminLoading = ref(false);
 /** 重置超级管理员权限 */
 const handleResetAdmin = async () => {
-	resetAdminLoading.value = true;
-	try {
-		const res = await resetAdminAuthority();
-		if (res.code === 0) {
-			message.success(res.message);
-		} else {
-			message.error(res.message);
-		}
-	} finally {
-		resetAdminLoading.value = false;
-	}
+  resetAdminLoading.value = true;
+  try {
+    const res = await resetAdminAuthority();
+    if (res.code === 0) {
+      message.success(res.message);
+    } else {
+      message.error(res.message);
+    }
+  } finally {
+    resetAdminLoading.value = false;
+  }
 };
 // endregion
 
@@ -233,19 +230,19 @@ const updateAuthVisible = ref(false);
 const authTreeData = ref<API.Authority[]>([]);
 const authRoleId = ref<string>("");
 const onUpdateAuthority = async (record: API.Role) => {
-	authRoleId.value = record.id;
-	tableDataLoading.value = true;
-	try {
-		const res = await getAuthorityTreeByRoleId(record.id);
-		if (res.code === 0) {
-			authTreeData.value = res.data;
-			updateAuthVisible.value = true;
-		} else {
-			message.error(res.message);
-		}
-	} finally {
-		tableDataLoading.value = false;
-	}
+  authRoleId.value = record.id;
+  tableDataLoading.value = true;
+  try {
+    const res = await getAuthorityTreeByRoleId(record.id);
+    if (res.code === 0) {
+      authTreeData.value = res.data;
+      updateAuthVisible.value = true;
+    } else {
+      message.error(res.message);
+    }
+  } finally {
+    tableDataLoading.value = false;
+  }
 };
 // endregion
 </script>

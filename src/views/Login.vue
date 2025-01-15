@@ -65,52 +65,49 @@ const router = useRouter();
 const loading = ref(false);
 
 const userLoginRules: Record<string, Rule[]> = {
-	usernameOrEmail: [
-		{
-			required: true,
-			message: "请输入用户名或邮箱",
-			trigger: "change",
-		},
-	],
-	password: [
-		{
-			required: true,
-			message: "请输入密码",
-			trigger: "change",
-		},
-	],
+  usernameOrEmail: [
+    {
+      required: true,
+      message: "请输入用户名或邮箱",
+      trigger: "change",
+    },
+  ],
+  password: [
+    {
+      required: true,
+      message: "请输入密码",
+      trigger: "change",
+    },
+  ],
 };
 
 const userLoginParams = ref<API.UserLoginParams>({
-	usernameOrEmail: "",
-	password: "",
+  usernameOrEmail: "",
+  password: "",
 });
 
 const handleLogin = async () => {
-	loading.value = true;
-	try {
-		const res = await login(userLoginParams.value);
-		if (res.code === 0) {
-			localStorage.setItem(LocalStorageEnum.JWT, `Bearer ${res.data.token}`);
-			localStorage.setItem(
-				LocalStorageEnum.LOGIN_USER,
-				JSON.stringify(res.data),
-			);
-			loginUser.value = res.data;
-			message.success("登录成功");
-			router.push("/index");
-		} else {
-			message.error(res.message);
-		}
-	} finally {
-		loading.value = false;
-	}
+  loading.value = true;
+  try {
+    const res = await login(userLoginParams.value);
+    if (res.code === 0) {
+      localStorage.setItem(LocalStorageEnum.JWT, `Bearer ${res.data.token}`);
+      localStorage.setItem(LocalStorageEnum.LOGIN_USER, JSON.stringify(res.data));
+      loginUser.value = res.data;
+      message.success("登录成功");
+      router.push("/index");
+    } else {
+      message.error(res.message);
+    }
+  } finally {
+    loading.value = false;
+  }
 };
 
 const toRegister = () => {
-	router.push({
-		name: "register",
-	});
+  router.push({
+    name: "register",
+  });
 };
 </script>
 

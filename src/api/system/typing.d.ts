@@ -1,35 +1,35 @@
 declare namespace API {
-	type UserLoginParams = {
-		usernameOrEmail: string;
-		password: string;
-	};
+  type UserLoginParams = {
+    usernameOrEmail: string;
+    password: string;
+  };
 
-	type SessionUser = {
-		userId: string;
-		roleId: string;
-		nickname: string;
-		userAvatar?: string;
-		gender: number;
-		userProfile: string;
-		username: string
-	};
+  type SessionUser = {
+    userId: string;
+    roleId: string;
+    nickname: string;
+    userAvatar?: string;
+    gender: number;
+    userProfile: string;
+    username: string;
+  };
 
-	type LoginUser = {
-		token: string;
-		userInfo: API.SessionUser;
-		authorityList: API.Authority[];
-	};
+  type LoginUser = {
+    token: string;
+    userInfo: API.SessionUser;
+    authorityList: API.Authority[];
+  };
 
-	type UserRegisterParams = {
-		username: string;
-		email: string;
-		password: string;
-		checkPassword: string;
-		verificationCode: string;
-	};
+  type UserRegisterParams = {
+    username: string;
+    email: string;
+    password: string;
+    checkPassword: string;
+    verificationCode: string;
+  };
 
   type VerificationCodeSendParams = {
-    target: string,
-    biz: string
-  }
+    target: string;
+    biz: string;
+  };
 }

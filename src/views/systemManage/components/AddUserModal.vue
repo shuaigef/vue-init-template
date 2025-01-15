@@ -12,7 +12,7 @@
       <a-form-item name="userAvatar" label="头像">
         <SingleImageUpload :biz="FileUploadBizEnum.USER_AVATAR" v-model:fileUrl="formData.userAvatar"/>
       </a-form-item>
-			<a-form-item name="username" label="用户名">
+      <a-form-item name="username" label="用户名">
         <a-input v-model:value="formData.username" placeholder="请输入用户名" />
       </a-form-item>
       <a-form-item name="nickname" label="昵称">
@@ -56,7 +56,7 @@ import SingleImageUpload from "../../../components/SingleImageUpload.vue";
 import { FileUploadBizEnum } from "../../../constants";
 
 const props = defineProps<{
-	visible: boolean;
+  visible: boolean;
 }>();
 
 const emit = defineEmits(["ok", "update:visible"]);
@@ -64,86 +64,86 @@ const emit = defineEmits(["ok", "update:visible"]);
 const formRef = ref();
 /** 表单数据 */
 const formData = ref<API.UserAddParams>({
-	username: "",
-	password: "",
-	nickname: "",
-	userAvatar: "",
-	gender: 0,
-	roleId: "",
-	email: "",
-	phoneNumber: "",
+  username: "",
+  password: "",
+  nickname: "",
+  userAvatar: "",
+  gender: 0,
+  roleId: "",
+  email: "",
+  phoneNumber: "",
 });
 /** 表单校验规则 */
 const formRules: Record<string, Rule[]> = {
-	username: [
-		{ required: true, message: "请输入用户名", trigger: "change" },
-		{
-			pattern: /^[a-zA-Z0-9_-]{4,10}$/,
-			message: "请输入有效的用户名（4-10位，字母、数字、下划线或横线）",
-			trigger: "blur",
-		},
-	],
-	password: [
-		{ required: true, message: "请输入密码", trigger: "change" },
-		{
-			pattern: /^[\w!@#$%^&*()+-=.]{6,18}$/,
-			message: "请输入有效的密码（6-18位，字母、数字、下划线或特殊字符）",
-			trigger: "blur",
-		},
-	],
-	nickname: [
-		{ required: true, message: "请输入昵称", trigger: "change" },
-		{
-			min: 2,
-			max: 10,
-			message: "请输入有效的昵称（2-10位字符）",
-			trigger: "blur",
-		},
-	],
+  username: [
+    { required: true, message: "请输入用户名", trigger: "change" },
+    {
+      pattern: /^[a-zA-Z0-9_-]{4,10}$/,
+      message: "请输入有效的用户名（4-10位，字母、数字、下划线或横线）",
+      trigger: "blur",
+    },
+  ],
+  password: [
+    { required: true, message: "请输入密码", trigger: "change" },
+    {
+      pattern: /^[\w!@#$%^&*()+-=.]{6,18}$/,
+      message: "请输入有效的密码（6-18位，字母、数字、下划线或特殊字符）",
+      trigger: "blur",
+    },
+  ],
+  nickname: [
+    { required: true, message: "请输入昵称", trigger: "change" },
+    {
+      min: 2,
+      max: 10,
+      message: "请输入有效的昵称（2-10位字符）",
+      trigger: "blur",
+    },
+  ],
 };
 /** 确认按钮加载 */
 const confirmLoading = ref(false);
 /** 对话框确认事件 */
 const handleOk = async () => {
-	confirmLoading.value = true;
-	try {
-		await formRef.value.validate();
-		const res = await addUser(formData.value);
-		if (res.code === 0) {
-			handleCancel();
-			message.success(res.message);
-			emit("ok");
-		} else {
-			message.error(res.message);
-		}
-	} finally {
-		confirmLoading.value = false;
-	}
+  confirmLoading.value = true;
+  try {
+    await formRef.value.validate();
+    const res = await addUser(formData.value);
+    if (res.code === 0) {
+      handleCancel();
+      message.success(res.message);
+      emit("ok");
+    } else {
+      message.error(res.message);
+    }
+  } finally {
+    confirmLoading.value = false;
+  }
 };
 /** 对话框取消事件 */
 const handleCancel = () => {
-	emit("update:visible", false);
-	formData.value = {
-		username: "",
-		password: "",
-		nickname: "",
-		userAvatar: "",
-		gender: 0,
-		roleId: "",
-		email: "",
-		phoneNumber: "",
-	};
+  emit("update:visible", false);
+  formData.value = {
+    username: "",
+    password: "",
+    nickname: "",
+    userAvatar: "",
+    gender: 0,
+    roleId: "",
+    email: "",
+    phoneNumber: "",
+  };
 };
 /** 角色列表 */
 const roleList = ref<API.Role[]>([]);
 /** 获取角色数据 */
 (async () => {
-	const res = await listRole();
-	if (res.code === 0) {
-		roleList.value = res.data;
-	} else {
-		message.error(res.message);
-	}
+  const res = await listRole();
+  if (res.code === 0) {
+    roleList.value = res.data;
+  } else {
+    message.error(res.message);
+  }
 })();
 </script>
 

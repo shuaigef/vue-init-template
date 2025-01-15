@@ -44,7 +44,7 @@
         </template>
       </template>
     </a-table>
-		<UpdateUserModal v-model:visible="updateModalVisible" :updateFormData="updateUser" @ok="handleUpdateUserOk"/>
+    <UpdateUserModal v-model:visible="updateModalVisible" :updateFormData="updateUser" @ok="handleUpdateUserOk"/>
   </div>
 </template>
 
@@ -57,51 +57,51 @@ import AddUserModal from "./components/AddUserModal.vue";
 import UpdateUserModal from "./components/UpdateUserModal.vue";
 
 const columns = [
-	{
-		title: "用户名",
-		dataIndex: "username",
-		align: "center",
-	},
-	{
-		title: "昵称",
-		dataIndex: "nickname",
-		align: "center",
-	},
-	{
-		title: "角色",
-		dataIndex: "roleName",
-		align: "center",
-	},
-	{
-		title: "个人简介",
-		dataIndex: "userProfile",
-		align: "center",
-	},
-	{
-		title: "性别",
-		dataIndex: "gender",
-		align: "center",
-	},
-	{
-		title: "邮箱",
-		dataIndex: "email",
-		align: "center",
-	},
-	{
-		title: "手机号",
-		dataIndex: "phoneNumber",
-		align: "center",
-	},
-	{
-		title: "创建时间",
-		dataIndex: "createTime",
-		align: "center",
-	},
-	{
-		title: "操作",
-		dataIndex: "operation",
-		align: "center",
-	},
+  {
+    title: "用户名",
+    dataIndex: "username",
+    align: "center",
+  },
+  {
+    title: "昵称",
+    dataIndex: "nickname",
+    align: "center",
+  },
+  {
+    title: "角色",
+    dataIndex: "roleName",
+    align: "center",
+  },
+  {
+    title: "个人简介",
+    dataIndex: "userProfile",
+    align: "center",
+  },
+  {
+    title: "性别",
+    dataIndex: "gender",
+    align: "center",
+  },
+  {
+    title: "邮箱",
+    dataIndex: "email",
+    align: "center",
+  },
+  {
+    title: "手机号",
+    dataIndex: "phoneNumber",
+    align: "center",
+  },
+  {
+    title: "创建时间",
+    dataIndex: "createTime",
+    align: "center",
+  },
+  {
+    title: "操作",
+    dataIndex: "operation",
+    align: "center",
+  },
 ];
 /** 表格数据加载 */
 const tableDataLoading = ref(false);
@@ -111,127 +111,127 @@ const tableData = ref<API.User[]>([]);
 const selectedKeys = ref<string[]>([]);
 /** 表格行选择配置 */
 const rowSelection = ref<TableRowSelection<API.User>>({
-	type: "checkbox",
-	selectedRowKeys: selectedKeys.value,
-	onChange: (selectedRowKeys) => {
-		selectedKeys.value = selectedRowKeys as string[];
-	},
+  type: "checkbox",
+  selectedRowKeys: selectedKeys.value,
+  onChange: (selectedRowKeys) => {
+    selectedKeys.value = selectedRowKeys as string[];
+  },
 });
 watch(
-	() => selectedKeys.value,
-	(newSelectedKeys) => {
-		rowSelection.value.selectedRowKeys = newSelectedKeys;
-	},
+  () => selectedKeys.value,
+  (newSelectedKeys) => {
+    rowSelection.value.selectedRowKeys = newSelectedKeys;
+  },
 );
 /** 默认分页配置 */
 const defaultPagination = {
-	current: 1,
-	pageSize: 10,
+  current: 1,
+  pageSize: 10,
 };
 /** 分页信息 */
 const pagination = ref({
-	showTotal: (total: number) => `共 ${total} 条记录`,
-	total: tableData.value.length,
-	current: defaultPagination.current,
-	pageSize: defaultPagination.pageSize,
-	onChange: (page: number, pageSize: number) => {
-		pagination.value.current = page;
-		pagination.value.pageSize = pageSize;
-		getTableData();
-	},
+  showTotal: (total: number) => `共 ${total} 条记录`,
+  total: tableData.value.length,
+  current: defaultPagination.current,
+  pageSize: defaultPagination.pageSize,
+  onChange: (page: number, pageSize: number) => {
+    pagination.value.current = page;
+    pagination.value.pageSize = pageSize;
+    getTableData();
+  },
 });
 /** 用户列表查询参数 */
 const tableDataQueryParams = ref<API.UserQueryParams>({
-	username: "",
-	nickname: "",
-	current: pagination.value.current,
-	pageSize: pagination.value.pageSize,
+  username: "",
+  nickname: "",
+  current: pagination.value.current,
+  pageSize: pagination.value.pageSize,
 });
 /** 搜索 */
 const onSearch = () => {
-	pagination.value.current = defaultPagination.current;
-	pagination.value.pageSize = defaultPagination.pageSize;
-	getTableData();
+  pagination.value.current = defaultPagination.current;
+  pagination.value.pageSize = defaultPagination.pageSize;
+  getTableData();
 };
 /** 清空搜索条件 */
 const onClear = () => {
-	tableDataQueryParams.value.username = "";
-	tableDataQueryParams.value.nickname = "";
-	pagination.value.current = defaultPagination.current;
-	pagination.value.pageSize = defaultPagination.pageSize;
-	getTableData();
+  tableDataQueryParams.value.username = "";
+  tableDataQueryParams.value.nickname = "";
+  pagination.value.current = defaultPagination.current;
+  pagination.value.pageSize = defaultPagination.pageSize;
+  getTableData();
 };
 
 /** 新增用户完成事件 */
 const addModalVisible = ref(false);
 const handleAddUserOk = () => {
-	onClear();
+  onClear();
 };
 /** 批量删除 */
 const onDeleteBatch = async () => {
-	const res = await deleteBatchUser(selectedKeys.value);
-	if (res.code === 0) {
-		onClear();
-	} else {
-		message.error(res.message);
-	}
+  const res = await deleteBatchUser(selectedKeys.value);
+  if (res.code === 0) {
+    onClear();
+  } else {
+    message.error(res.message);
+  }
 };
 /** 删除 */
 const onDelete = async (record: API.User) => {
-	const res = await deleteUser(record.id);
-	if (res.code === 0) {
-		onClear();
-	} else {
-		message.error(res.message);
-	}
+  const res = await deleteUser(record.id);
+  if (res.code === 0) {
+    onClear();
+  } else {
+    message.error(res.message);
+  }
 };
 /** 修改按钮事件 */
 const updateUser = ref<API.UserUpdateParams>({
-	id: "",
-	username: "",
-	userProfile: "",
-	nickname: "",
-	userAvatar: "",
-	gender: 0,
-	roleId: "",
-	email: "",
-	phoneNumber: "",
+  id: "",
+  username: "",
+  userProfile: "",
+  nickname: "",
+  userAvatar: "",
+  gender: 0,
+  roleId: "",
+  email: "",
+  phoneNumber: "",
 });
 const onUpdate = (record: API.User) => {
-	updateUser.value = {
-		...record,
-	};
-	updateModalVisible.value = true;
+  updateUser.value = {
+    ...record,
+  };
+  updateModalVisible.value = true;
 };
 const updateModalVisible = ref(false);
 const handleUpdateUserOk = () => {
-	onClear();
+  onClear();
 };
 
 /** 获取表格数据 */
 watch(
-	() => pagination.value,
-	(newPagination) => {
-		tableDataQueryParams.value.current = newPagination.current;
-		tableDataQueryParams.value.pageSize = newPagination.pageSize;
-	},
-	{ immediate: true },
+  () => pagination.value,
+  (newPagination) => {
+    tableDataQueryParams.value.current = newPagination.current;
+    tableDataQueryParams.value.pageSize = newPagination.pageSize;
+  },
+  { immediate: true },
 );
 /** 获取表格数据 */
 const getTableData = async () => {
-	selectedKeys.value = [];
-	tableDataLoading.value = true;
-	try {
-		const res = await listUserByPage(tableDataQueryParams.value);
-		if (res.code === 0) {
-			tableData.value = res.data.records;
-			pagination.value.total = res.data.total;
-		} else {
-			message.error(res.message);
-		}
-	} finally {
-		tableDataLoading.value = false;
-	}
+  selectedKeys.value = [];
+  tableDataLoading.value = true;
+  try {
+    const res = await listUserByPage(tableDataQueryParams.value);
+    if (res.code === 0) {
+      tableData.value = res.data.records;
+      pagination.value.total = res.data.total;
+    } else {
+      message.error(res.message);
+    }
+  } finally {
+    tableDataLoading.value = false;
+  }
 };
 getTableData();
 </script>

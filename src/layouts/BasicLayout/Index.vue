@@ -63,17 +63,17 @@ const { loginUser } = storeToRefs(systemStore);
 const router = useRouter();
 
 const toLogout = async () => {
-	try {
-		await logout();
-		message.success("登出成功");
-	} finally {
-		localStorage.removeItem(LocalStorageEnum.JWT);
-		localStorage.removeItem(LocalStorageEnum.LOGIN_USER);
-		loginUser.value = null;
-		router.push({
-			name: "login",
-		});
-	}
+  try {
+    await logout();
+    message.success("登出成功");
+  } finally {
+    localStorage.removeItem(LocalStorageEnum.JWT);
+    localStorage.removeItem(LocalStorageEnum.LOGIN_USER);
+    loginUser.value = null;
+    router.push({
+      name: "login",
+    });
+  }
 };
 </script>
 

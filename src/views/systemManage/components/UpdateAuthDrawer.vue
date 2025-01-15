@@ -33,9 +33,9 @@ import { computed, defineEmits, defineProps, ref, watch } from "vue";
 import { roleBindAuthority } from "../../../api/authority";
 
 const props = defineProps<{
-	visible: boolean;
-	authRoleId: string;
-	authTreeData: API.Authority[];
+  visible: boolean;
+  authRoleId: string;
+  authTreeData: API.Authority[];
 }>();
 
 const emit = defineEmits(["update:visible"]);
@@ -43,94 +43,87 @@ const emit = defineEmits(["update:visible"]);
 const treeData = ref<API.Authority[]>([]);
 
 const checkedKeys = ref<{
-	checked: string[];
-	halfChecked: string[];
+  checked: string[];
+  halfChecked: string[];
 }>({
-	checked: [],
-	halfChecked: [],
+  checked: [],
+  halfChecked: [],
 });
 
 const authorityUpdateParams = computed<API.RoleAuthorityUpdateParams>(() => ({
-	roleId: props.authRoleId,
-	authorityIds: checkedKeys.value.checked.concat(checkedKeys.value.halfChecked),
+  roleId: props.authRoleId,
+  authorityIds: checkedKeys.value.checked.concat(checkedKeys.value.halfChecked),
 }));
 const confirmLoading = ref(false);
 const onConfirm = async () => {
-	confirmLoading.value = true;
-	try {
-		const res = await roleBindAuthority(authorityUpdateParams.value);
-		if (res.code === 0) {
-			// 子组件触发父组件事件
-			emit("update:visible", false);
-			message.success(res.message);
-		} else {
-			message.error(res.message);
-		}
-	} finally {
-		confirmLoading.value = false;
-	}
+  confirmLoading.value = true;
+  try {
+    const res = await roleBindAuthority(authorityUpdateParams.value);
+    if (res.code === 0) {
+      // 子组件触发父组件事件
+      emit("update:visible", false);
+      message.success(res.message);
+    } else {
+      message.error(res.message);
+    }
+  } finally {
+    confirmLoading.value = false;
+  }
 };
 
 const onClose = () => {
-	emit("update:visible", false);
+  emit("update:visible", false);
 };
 
 const initCheckedAndHalfCheckedKeys = (tree: API.Authority[]) => {
-	const checked: string[] = [];
-	const halfChecked: string[] = [];
+  const checked: string[] = [];
+  const halfChecked: string[] = [];
 
-	const traverse = (
-		nodes: API.Authority[],
-	): { isAllChecked: boolean; isSomeChecked: boolean } => {
-		let isAllChecked = true;
-		let isSomeChecked = false;
+  const traverse = (nodes: API.Authority[]): { isAllChecked: boolean; isSomeChecked: boolean } => {
+    let isAllChecked = true;
+    let isSomeChecked = false;
 
-		for (const node of nodes) {
-			if (node.children && node.children.length > 0) {
-				const { isAllChecked: childAll, isSomeChecked: childSome } = traverse(
-					node.children,
-				);
+    for (const node of nodes) {
+      if (node.children && node.children.length > 0) {
+        const { isAllChecked: childAll, isSomeChecked: childSome } = traverse(node.children);
 
-				if (childAll) {
-					checked.push(node.id); // 子节点全选中，父节点完全选中
-				} else if (childSome) {
-					halfChecked.push(node.id); // 子节点部分选中，父节点半选
-				}
-				isAllChecked = isAllChecked && childAll;
-				isSomeChecked = isSomeChecked || childSome;
-			} else {
-				if (node.check) {
-					checked.push(node.id); // 叶子节点选中
-				} else {
-					isAllChecked = false; // 如果有一个未选中，父节点不能是全选
-				}
-				isSomeChecked = isSomeChecked || !!node.check;
-			}
-		}
+        if (childAll) {
+          checked.push(node.id); // 子节点全选中，父节点完全选中
+        } else if (childSome) {
+          halfChecked.push(node.id); // 子节点部分选中，父节点半选
+        }
+        isAllChecked = isAllChecked && childAll;
+        isSomeChecked = isSomeChecked || childSome;
+      } else {
+        if (node.check) {
+          checked.push(node.id); // 叶子节点选中
+        } else {
+          isAllChecked = false; // 如果有一个未选中，父节点不能是全选
+        }
+        isSomeChecked = isSomeChecked || !!node.check;
+      }
+    }
 
-		return { isAllChecked, isSomeChecked };
-	};
+    return { isAllChecked, isSomeChecked };
+  };
 
-	traverse(tree);
-	checkedKeys.value.checked = checked;
-	checkedKeys.value.halfChecked = halfChecked;
+  traverse(tree);
+  checkedKeys.value.checked = checked;
+  checkedKeys.value.halfChecked = halfChecked;
 };
 
 watch(
-	() => props.authTreeData,
-	async (newValue) => {
-		treeData.value = newValue;
-		console.log({ authTreeData: props.authTreeData });
-		initCheckedAndHalfCheckedKeys(newValue);
-	},
+  () => props.authTreeData,
+  async (newValue) => {
+    treeData.value = newValue;
+    console.log({ authTreeData: props.authTreeData });
+    initCheckedAndHalfCheckedKeys(newValue);
+  },
 );
 
-const onCheck = (
-	checked: string[],
-	e: AntTreeNodeCheckedEvent & { halfCheckedKeys: string[] },
-) => {
-	checkedKeys.value.checked = checked;
-	checkedKeys.value.halfChecked = e.halfCheckedKeys;
+const onCheck = (checked: string[], e: AntTreeNodeCheckedEvent & { halfCheckedKeys: string[] }) => {
+  checkedKeys.value.checked = checked;
+  checkedKeys.value.halfChecked = e.halfCheckedKeys;
 };
 </script>
 

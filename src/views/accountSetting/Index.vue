@@ -35,10 +35,10 @@ const selectedKeys = ref(["basicSetting"]);
 const route = useRoute();
 // 监听路由变化来动态更新选中的菜单项
 watch(
-	() => route.name,
-	(newValue) => {
-		selectedKeys.value[0] = String(newValue);
-	},
+  () => route.name,
+  (newValue) => {
+    selectedKeys.value[0] = String(newValue);
+  },
 );
 </script>
 
