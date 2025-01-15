@@ -1,6 +1,6 @@
 # Vue3 + ts 前端初始化模版
 
-该项目用于 Vue3 + ts 的前端项目初始化，整合了目前主流的常用技术栈
+本项目是基于 Vue3 + TypeScript 的前端项目初始化模版，整合了当前主流的常用技术栈，旨在帮助开发者快速构建高效、现代化的前端应用。建议与 [SpringBoot 初始化模版](https://github.com/shuaigef/springboot-init) 配套使用，前端接口均以该模版中的接口为基础进行开发。配套使用可显著提升项目启动效率；若单独使用，则需根据实际需求自行替换前端接口。
 
 
 
@@ -19,7 +19,7 @@
 
 
 
-## 使用方式
+## 快速使用
 
 1. 安装依赖
 
@@ -41,7 +41,9 @@
 
 
 
-### Boime 使用
+## Boime 使用
+
+### 常用命令
 
 - 格式化代码
 
@@ -69,10 +71,16 @@
 
 
 
-tips：
+### Tips
 
 - 可使用编辑器插件快速格式化代码，
   - vscode，官方提供了详细的配置说明，https://biomejs.dev/zh-cn/reference/vscode/
   - webstorm，https://biomejs.dev/zh-cn/guides/editors/first-party-extensions/
 - 项目默认不将 biome 与git 集成，若需要与 git 集成，可参考官方文档，https://biomejs.dev/zh-cn/guides/integrate-in-vcs/
 - 若需要使用 Git Hooks，可参考官方文档，https://biomejs.dev/zh-cn/recipes/git-hooks/
+
+
+
+---
+
+本模版旨在提升开发效率，为开发者提供开箱即用的现代化前端开发体验。如有问题，欢迎提出改进建议！
