@@ -109,7 +109,7 @@ const columns = [
   },
   {
     title: "跳转路径",
-    dataIndex: "routePath",
+    dataIndex: "path",
     align: "center",
     width: 250,
   },
@@ -243,7 +243,7 @@ const updateAuthority = ref<API.AuthorityUpdateParams>({
   parentId: "0",
   authorityType: "",
   redirect: "",
-  routePath: "",
+  path: "",
   hidden: 0,
   menuIcon: "",
   component: "",

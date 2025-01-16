@@ -27,8 +27,8 @@
       <a-form-item name="redirect" label="一级菜单跳转路径">
         <a-input v-model:value="formData.redirect" placeholder="请输入一级菜单跳转路径" />
       </a-form-item>
-      <a-form-item name="routePath" label="路由路径">
-        <a-input v-model:value="formData.routePath" placeholder="请输入路由路径" />
+      <a-form-item name="path" label="路由路径">
+        <a-input v-model:value="formData.path" placeholder="请输入路由路径" />
       </a-form-item>
       <a-form-item name="hidden" label="是否隐藏菜单">
         <a-select v-model:value="formData.hidden" placeholder="请选择是否隐藏菜单">
@@ -72,7 +72,7 @@ const formData = ref<API.AuthorityUpdateParams>({
   parentId: "0",
   authorityType: "",
   redirect: "",
-  routePath: "",
+  path: "",
   hidden: 0,
   menuIcon: "",
   component: "",
@@ -93,7 +93,7 @@ const formRules: Record<string, Rule[]> = {
   orderNo: [{ required: true, message: "请输入菜单顺序", trigger: "change" }],
   parentId: [{ required: true, message: "请输入父节点id", trigger: "change" }],
   authorityType: [{ required: true, message: "请输入权限类型", trigger: "change" }],
-  routePath: [{ required: true, message: "请输入路由路径", trigger: "change" }],
+  path: [{ required: true, message: "请输入路由路径", trigger: "change" }],
   hidden: [{ required: true, message: "请输入是否隐藏路由菜单", trigger: "change" }],
   component: [{ required: true, message: "请输入组件", trigger: "change" }],
   componentName: [{ required: true, message: "请输入组件名称", trigger: "change" }],
@@ -128,7 +128,7 @@ const handleCancel = () => {
     parentId: "0",
     authorityType: "",
     redirect: "",
-    routePath: "",
+    path: "",
     hidden: 0,
     menuIcon: "",
     component: "",

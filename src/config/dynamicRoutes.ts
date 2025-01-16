@@ -34,12 +34,6 @@ const dynamicRoutes: RouteRecordRaw[] = [
           },
         ],
       },
-      // {
-      //   path: "system/manage/user",
-      //   name: "userManage",
-      //   component: UserManage,
-      //   meta: { title: "用户管理" },
-      // },
       {
         path: "system/manage",
         name: "systemManage",

@@ -14,7 +14,7 @@ declare namespace API {
     parentId: string;
     authorityType: string;
     redirect?: string;
-    routePath: string;
+    path: string;
     hidden: number;
     menuIcon?: string;
     component: string;
@@ -40,7 +40,7 @@ declare namespace API {
     parentId: string;
     authorityType: string;
     redirect?: string;
-    routePath: string;
+    path: string;
     hidden: number;
     menuIcon?: string;
     component: string;
@@ -55,7 +55,7 @@ declare namespace API {
     parentId: string;
     authorityType: string;
     redirect?: string;
-    routePath: string;
+    path: string;
     hidden: number;
     menuIcon?: string;
     component: string;
