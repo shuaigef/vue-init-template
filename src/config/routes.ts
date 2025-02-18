@@ -1,7 +1,7 @@
+import { LocalStorageEnum } from "@/constants";
 import { message } from "ant-design-vue";
 import * as VueRouter from "vue-router";
 import type { RouteRecordRaw } from "vue-router";
-import { LocalStorageEnum } from "../constants";
 import LoginLayout from "../layouts/LoginLayout.vue";
 import Login from "../views/Login.vue";
 import Register from "../views/Register.vue";

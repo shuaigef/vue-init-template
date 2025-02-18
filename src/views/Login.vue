@@ -47,15 +47,15 @@
 </template>
 
 <script setup lang="ts">
+import { login } from "@/api/system";
+import { LocalStorageEnum } from "@/constants";
+import { useSystemStore } from "@/store";
 import { LockOutlined, UserOutlined } from "@ant-design/icons-vue";
 import { message } from "ant-design-vue";
 import type { Rule } from "ant-design-vue/es/form";
 import { storeToRefs } from "pinia";
 import { ref } from "vue";
 import { useRouter } from "vue-router";
-import { login } from "../api/system/index";
-import { LocalStorageEnum } from "../constants";
-import { useSystemStore } from "../store/index";
 
 const systemStore = useSystemStore();
 const { loginUser } = storeToRefs(systemStore);

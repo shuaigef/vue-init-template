@@ -62,10 +62,10 @@
 </template>
 
 <script setup lang="ts">
+import { deleteAuthority, deleteBatchAuthority, queryAuthorityByPage } from "@/api/authority";
 import { message } from "ant-design-vue";
 import type { TableRowSelection } from "ant-design-vue/es/table/interface";
 import { ref, watch } from "vue";
-import { deleteAuthority, deleteBatchAuthority, queryAuthorityByPage } from "../../api/authority";
 import AddAuthorityModal from "./components/AddAuthorityModal.vue";
 import UpdateAuthorityModal from "./components/UpdateAuthorityModal.vue";
 

@@ -49,10 +49,10 @@
 </template>
 
 <script setup lang="ts">
+import { deleteBatchUser, deleteUser, listUserByPage } from "@/api/user";
 import { message } from "ant-design-vue";
 import type { TableRowSelection } from "ant-design-vue/es/table/interface";
 import { ref, watch } from "vue";
-import { deleteBatchUser, deleteUser, listUserByPage } from "../../api/user";
 import AddUserModal from "./components/AddUserModal.vue";
 import UpdateUserModal from "./components/UpdateUserModal.vue";
 

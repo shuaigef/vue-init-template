@@ -27,10 +27,10 @@
 </template>
 
 <script setup lang="ts">
+import { roleBindAuthority } from "@/api/authority";
 import { message } from "ant-design-vue";
 import type { AntTreeNodeCheckedEvent } from "ant-design-vue/es/tree";
 import { computed, defineEmits, defineProps, ref, watch } from "vue";
-import { roleBindAuthority } from "../../../api/authority";
 
 const props = defineProps<{
   visible: boolean;

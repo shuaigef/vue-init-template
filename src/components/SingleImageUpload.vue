@@ -20,12 +20,12 @@
 </template>
 
 <script setup lang="ts">
+import { uploadFile } from "@/api/file";
+import { FileUploadBizEnum } from "@/constants";
 import { PlusOutlined } from "@ant-design/icons-vue";
 import { type ProgressProps, type UploadFile, message } from "ant-design-vue";
 import type { UploadRequestOption } from "ant-design-vue/es/vc-upload/interface";
 import { ref, watch } from "vue";
-import { uploadFile } from "../api/file";
-import { FileUploadBizEnum } from "../constants";
 
 const props = defineProps<{
   biz: string;

@@ -48,13 +48,13 @@
 </template>
 
 <script setup lang="ts">
+import { getAuthorityTreeByRoleId, resetAdminAuthority } from "@/api/authority";
+import { deleteBatchRole, deleteRole, queryRoleByPage } from "@/api/role";
+import { useSystemStore } from "@/store";
 import { message } from "ant-design-vue";
 import type { TableRowSelection } from "ant-design-vue/es/table/interface";
 import { storeToRefs } from "pinia";
 import { ref, watch } from "vue";
-import { getAuthorityTreeByRoleId, resetAdminAuthority } from "../../api/authority";
-import { deleteBatchRole, deleteRole, queryRoleByPage } from "../../api/role";
-import { useSystemStore } from "../../store";
 import AddRoleModal from "./components/AddRoleModal.vue";
 import UpdateAuthDrawer from "./components/UpdateAuthDrawer.vue";
 import UpdateRoleModal from "./components/UpdateRoleModal.vue";

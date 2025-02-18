@@ -50,10 +50,10 @@
 </template>
 
 <script setup lang="ts">
+import { updateAuthority } from "@/api/authority";
 import { message } from "ant-design-vue";
 import type { Rule } from "ant-design-vue/es/form";
 import { ref, watch } from "vue";
-import { updateAuthority } from "../../../api/authority";
 
 const props = defineProps<{
   visible: boolean;

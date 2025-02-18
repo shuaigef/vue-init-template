@@ -1,4 +1,4 @@
-import http from "../../plugins/request";
+import http from "@/utils/request";
 
 export async function getAuthorityTreeByRoleId(roleId: string) {
   return http.request<API.Authority[]>({

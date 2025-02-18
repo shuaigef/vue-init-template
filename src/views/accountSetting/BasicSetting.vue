@@ -32,14 +32,13 @@
 </template>
 
 <script setup lang="ts">
+import { updateUserBasicInfo } from "@/api/user";
+import { FileUploadBizEnum, LocalStorageEnum } from "@/constants";
+import { useSystemStore } from "@/store";
 import { message } from "ant-design-vue";
 import type { Rule } from "ant-design-vue/es/form";
 import { storeToRefs } from "pinia";
 import { ref } from "vue";
-import { updateUserBasicInfo } from "../../api/user";
-import SingleImageUpload from "../../components/SingleImageUpload.vue";
-import { FileUploadBizEnum, LocalStorageEnum } from "../../constants";
-import { useSystemStore } from "../../store";
 
 const systemStore = useSystemStore();
 const { loginUser } = storeToRefs(systemStore);

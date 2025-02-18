@@ -1,4 +1,4 @@
-import http from "../../plugins/request";
+import http from "@/utils/request";
 
 export async function listRole() {
   return http.request<API.Role[]>({

@@ -2,7 +2,7 @@
   <a-layout class="layout-main">
     <a-layout-header class="layout-header">
       <div class="header-logo">
-        <img src="/public/logo-hand-circle.png" width="32px"/>
+        <img src="/public/logo.png" width="32px"/>
         <span style="font-size: 20px; margin-left: 8px;">前端开发模版</span>
       </div>
       <div class="header-main">
@@ -45,14 +45,14 @@
 </template>
 
 <script setup lang="ts">
+import { logout } from "@/api/system";
+import { LocalStorageEnum } from "@/constants";
+import { useSystemStore } from "@/store";
 import { MenuFoldOutlined, MenuUnfoldOutlined } from "@ant-design/icons-vue";
 import { message } from "ant-design-vue";
 import { storeToRefs } from "pinia";
 import { ref } from "vue";
 import { useRouter } from "vue-router";
-import { logout } from "../../api/system";
-import { LocalStorageEnum } from "../../constants";
-import { useSystemStore } from "../../store";
 import Menu from "./Menu.vue";
 
 const collapsed = ref<boolean>(false);

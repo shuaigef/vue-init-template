@@ -1,4 +1,4 @@
-import http from "../../plugins/request";
+import http from "@/utils/request";
 
 export async function updateUserBasicInfo(body: API.UserUpdateBasicInfoParams) {
   return http.request<API.LoginUser>({

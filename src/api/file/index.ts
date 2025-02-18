@@ -1,5 +1,5 @@
+import http from "@/utils/request";
 import type { AxiosProgressEvent } from "axios";
-import http from "../../plugins/request";
 
 export async function uploadFile(
   biz: string,

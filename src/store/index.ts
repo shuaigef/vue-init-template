@@ -1,6 +1,6 @@
+import { LocalStorageEnum } from "@/constants";
 import { defineStore } from "pinia";
 import { ref } from "vue";
-import { LocalStorageEnum } from "../constants";
 
 export const useIndexStore = defineStore("index", () => {
   const str = "hello world";

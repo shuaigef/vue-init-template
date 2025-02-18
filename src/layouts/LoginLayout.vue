@@ -3,7 +3,7 @@
     <a-layout-sider :width="550" :hide-trigger="true" class="">
       <div class="sider">
         <div class="logo">
-          <img class="logo-img" :src="LOGO_URL">
+          <img class="logo-img" src="/public/logo.png">
           <div class="logo-text">前端初始化模版</div>
         </div>
         <div class="banner">
@@ -20,7 +20,6 @@
 </template>
 
 <script setup lang="ts">
-import { LOGO_URL } from "../constants";
 </script>
 
 <style scoped lang="scss">

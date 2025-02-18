@@ -20,10 +20,10 @@
 </template>
 
 <script setup lang="ts">
+import { updateRole } from "@/api/role";
 import { message } from "ant-design-vue";
 import type { Rule } from "ant-design-vue/es/form";
 import { ref, watch } from "vue";
-import { updateRole } from "../../../api/role";
 
 const props = defineProps<{
   visible: boolean;

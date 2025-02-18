@@ -47,13 +47,13 @@
 </template>
 
 <script setup lang="ts">
+import { listRole } from "@/api/role";
+import { addUser } from "@/api/user";
+import { FileUploadBizEnum } from "@/constants";
 import { message } from "ant-design-vue";
 import type { Rule } from "ant-design-vue/es/form";
 import { ref } from "vue";
-import { listRole } from "../../../api/role";
-import { addUser } from "../../../api/user";
 import SingleImageUpload from "../../../components/SingleImageUpload.vue";
-import { FileUploadBizEnum } from "../../../constants";
 
 const props = defineProps<{
   visible: boolean;

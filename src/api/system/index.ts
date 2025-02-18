@@ -1,4 +1,4 @@
-import http from "../../plugins/request";
+import http from "@/utils/request";
 
 export async function login(body: API.UserLoginParams) {
   return http.request<API.LoginUser>({

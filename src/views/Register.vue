@@ -38,13 +38,13 @@
 </template>
 
 <script setup lang="ts">
+import { register, sendVerificationCode } from "@/api/system";
+import { VerificationCodeBizEnum } from "@/constants";
 import { useIntervalFn } from "@vueuse/core";
 import { message } from "ant-design-vue";
 import type { Rule } from "ant-design-vue/es/form";
 import { onMounted, ref } from "vue";
 import { useRouter } from "vue-router";
-import { register, sendVerificationCode } from "../api/system";
-import { VerificationCodeBizEnum } from "../constants";
 
 // region 倒计时
 const time = ref(0);
